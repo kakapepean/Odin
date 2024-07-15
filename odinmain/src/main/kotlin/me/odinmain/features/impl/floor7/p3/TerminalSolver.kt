@@ -152,7 +152,7 @@ object TerminalSolver : Module(
                 }
 
                 Gui.drawRect(event.x, event.y, event.x + 16, event.y + 16, color.rgba)
-                text(text.toString(), event.x + 8.5f - getTextWidth(text.toString(), 12f) / 2, event.y + 4.5, textColor, size = 12f, OdinFont.REGULAR, shadow = textShadow)
+                text(text.toString(), event.x + 8f - getTextWidth(text.toString(), 12f) / 2, event.y + 9f, textColor, size = 12f, OdinFont.REGULAR, shadow = textShadow)
             }
             TerminalTypes.ORDER -> {
                 val index = solution.indexOf(event.slot.slotIndex)
@@ -167,7 +167,7 @@ object TerminalSolver : Module(
                 }
                 if (renderOrderNumbers) {
                     val amount = event.slot.stack?.stackSize ?: 0
-                    text(amount.toString(), event.x + 8.5f - OdinFont.getTextWidth(amount.toString(), 8f) / 2, event.y + 9f, textColor, 8f, shadow = textShadow)
+                    text(amount.toString(), event.x + 8f - OdinFont.getTextWidth(amount.toString(), 8f) / 2, event.y + 9f, textColor, 8f, shadow = textShadow)
                 }
             }
             TerminalTypes.STARTS_WITH ->
