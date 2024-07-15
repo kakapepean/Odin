@@ -8,7 +8,6 @@ import me.odinmain.features.impl.floor7.p3.termGUI.CustomTermGui
 import me.odinmain.features.settings.AlwaysActive
 import me.odinmain.features.settings.Setting.Companion.withDependency
 import me.odinmain.features.settings.impl.*
-import me.odinmain.font.OdinFont
 import me.odinmain.ui.clickgui.util.ColorUtil
 import me.odinmain.ui.clickgui.util.ColorUtil.withAlpha
 import me.odinmain.ui.util.MouseUtils
@@ -162,7 +161,7 @@ object TerminalSolver : Module(
                 }
 
                 Gui.drawRect(event.x, event.y, event.x + 16, event.y + 16, color.rgba)
-                text(text.toString(), event.x + 8f - getTextWidth(text.toString(), 12f) / 2, event.y + 9f, textColor, size = 12f, OdinFont.REGULAR, shadow = textShadow)
+                mcText(text.toString(), event.x + 8f - getMCTextWidth(text.toString()) / 2, event.y + 4.5, 1, textColor, shadow = textShadow, false)
             }
             TerminalTypes.ORDER -> {
                 val index = solution.indexOf(event.slot.slotIndex)
@@ -177,7 +176,7 @@ object TerminalSolver : Module(
                 }
                 if (renderOrderNumbers) {
                     val amount = event.slot.stack?.stackSize ?: 0
-                    text(amount.toString(), event.x + 8f - OdinFont.getTextWidth(amount.toString(), 8f) / 2, event.y + 9f, textColor, 8f, shadow = textShadow)
+                    mcText(amount.toString(), event.x + 8.5f - getMCTextWidth(amount.toString()) / 2, event.y + 4.5f, 1, textColor, shadow = textShadow, false)
                 }
             }
             TerminalTypes.STARTS_WITH ->
