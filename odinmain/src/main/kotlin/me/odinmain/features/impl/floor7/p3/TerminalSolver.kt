@@ -18,6 +18,7 @@ import me.odinmain.utils.render.*
 import me.odinmain.utils.skyblock.modMessage
 import me.odinmain.utils.skyblock.unformattedName
 import net.minecraft.client.gui.Gui
+import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.ContainerChest
@@ -35,6 +36,15 @@ object TerminalSolver : Module(
     description = "Renders solution for terminals in floor 7.",
     category = Category.FLOOR7
 ) {
+    private val disableRubix: Boolean by BooleanSetting("Disable in Rubix", false, description = "If enabled will not block wrong clicks in Rubix")
+    @SubscribeEvent
+    fun onSlotClick(event: GuiEvent.GuiMouseClickEvent) {
+        val gui = event.gui as? GuiChest ?: return
+        if (TerminalSolver.currentTerm == TerminalTypes.NONE) return
+        if (TerminalSolver.currentTerm == TerminalTypes.RUBIX && disableRubix) return
+        if (gui.slotUnderMouse?.slotIndex in TerminalSolver.solution) return
+        event.isCanceled = true
+    }
     private val lockRubixSolution: Boolean by BooleanSetting("Lock Rubix Solution", false, description = "Locks the 'correct' color of the rubix terminal to the one that was scanned first, should make the solver less 'jumpy'.")
     private val cancelToolTip: Boolean by BooleanSetting("Stop Tooltips", default = true, description = "Stops rendering tooltips in terminals")
     val renderType: Int by SelectorSetting("Mode", "Odin", arrayListOf("Odin", "Skytils", "SBE", "Custom GUI"))
